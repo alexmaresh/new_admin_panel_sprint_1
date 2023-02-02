@@ -129,3 +129,10 @@ dmypy.json
 .pyre/
 
 .python-version
+/.idea/vcs.xml
+/.idea/modules.xml
+/.idea/sqldialects.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/new_admin_panel_sprint_1.iml
+/.idea/misc.xml
+/.idea/.gitignore
