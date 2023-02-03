@@ -3,6 +3,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
 
+
 class TimeStampedMixin(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -44,7 +45,7 @@ class Filmwork(TimeStampedMixin, UUIDMixin):
     rating = models.FloatField(_('rating'), blank=True,
                                validators=[MinValueValidator(0),
                                            MaxValueValidator(100)])
-    type = models.CharField(max_length=2,choices=type_choices)
+    type = models.CharField(max_length=2, choices=type_choices)
     genres = models.ManyToManyField(Genre, through='GenreFilmwork')
 
     def __str__(self):
@@ -57,12 +58,13 @@ class Filmwork(TimeStampedMixin, UUIDMixin):
 
 
 class GenreFilmwork(UUIDMixin):
-        film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE)
-        genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
-        created = models.DateTimeField(auto_now_add=True)
+    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE)
+    genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
 
-        class Meta:
-            db_table = "content\".\"genre_film_work"
+    class Meta:
+        db_table = "content\".\"genre_film_work"
+
 
 class PersonFilmwork(UUIDMixin):
     film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE)

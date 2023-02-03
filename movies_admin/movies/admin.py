@@ -3,14 +3,17 @@ from .models import Genre, GenreFilmwork
 from .models import Filmwork
 from .models import Person, PersonFilmwork
 
+
 class GenreFilmworkInline(admin.TabularInline):
     model = GenreFilmwork
+
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created', 'modified')
     list_filter = ('name',)
     search_fields = ('name', 'id')
+
 
 @admin.register(Filmwork)
 class FilmworkAdmin(admin.ModelAdmin):
@@ -22,6 +25,7 @@ class FilmworkAdmin(admin.ModelAdmin):
 
 class PersonFilmworkInline(admin.TabularInline):
     model = PersonFilmwork
+
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
