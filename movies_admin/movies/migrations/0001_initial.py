@@ -56,7 +56,9 @@ class Migration(migrations.Migration):
                 ('full_name', models.CharField(max_length=255, verbose_name='full_name')),
             ],
             options={
-                'abstract': False,
+                'verbose_name': 'Person',
+                'verbose_name_plural': 'Persons',
+                'db_table': 'content"."person',
             },
         ),
         migrations.CreateModel(
@@ -69,7 +71,7 @@ class Migration(migrations.Migration):
                 ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='movies.person')),
             ],
             options={
-                'abstract': False,
+                'db_table': 'content"."person_film_work',
             },
         ),
         migrations.CreateModel(
