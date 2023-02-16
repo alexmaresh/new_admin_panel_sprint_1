@@ -42,10 +42,11 @@ class Filmwork(TimeStampedMixin, UUIDMixin):
     title = models.CharField(_('title'), max_length=255)
     description = models.TextField(_('description'), blank=True)
     creation_date = models.DateTimeField(auto_now=True)
+    file_path = models.FileField(_('file_path'), upload_to='film_works/', blank=True)
     rating = models.FloatField(_('rating'), blank=True,
                                validators=[MinValueValidator(0),
                                            MaxValueValidator(100)])
-    type = models.CharField(max_length=2, choices=type_choices)
+    type = models.CharField(max_length=20, choices=type_choices)
     genres = models.ManyToManyField(Genre, through='GenreFilmwork')
 
     def __str__(self):
@@ -58,8 +59,8 @@ class Filmwork(TimeStampedMixin, UUIDMixin):
 
 
 class GenreFilmwork(UUIDMixin):
-    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE)
-    genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
+    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE,to_field='id', db_column='film_work_id')
+    genre = models.ForeignKey('Genre', on_delete=models.CASCADE, to_field='id',db_column='genre_id')
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -67,8 +68,8 @@ class GenreFilmwork(UUIDMixin):
 
 
 class PersonFilmwork(UUIDMixin):
-    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE)
-    person = models.ForeignKey('Person', on_delete=models.CASCADE)
+    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE, to_field='id', db_column='film_work_id')
+    person = models.ForeignKey('Person', on_delete=models.CASCADE, to_field='id', db_column='person_id')
     role = models.TextField(_('role'), null=True)
     created = models.DateTimeField(auto_now_add=True)
 
