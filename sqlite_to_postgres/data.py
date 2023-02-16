@@ -11,14 +11,14 @@ class Table:
 @dataclass
 class FilmWork(Table):
     __slots__ = (
-        'id', 'title', 'description', 'creation_date', 'file_path','rating', 'type',
+        'id', 'title', 'description', 'creation_date', 'file_path', 'rating', 'type',
         'created_at', 'updated_at'
     )
     id: str
     title: str
     description: str
     creation_date: str
-    file_path :str
+    file_path: str
     rating: float
     type: str
     created_at: str

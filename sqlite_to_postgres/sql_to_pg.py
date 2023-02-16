@@ -5,7 +5,6 @@ import psycopg2
 from dotenv import load_dotenv
 from psycopg2.extensions import connection as psgr_connection
 import logging
-
 import data
 
 load_dotenv()

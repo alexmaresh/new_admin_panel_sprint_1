@@ -59,8 +59,8 @@ class Filmwork(TimeStampedMixin, UUIDMixin):
 
 
 class GenreFilmwork(UUIDMixin):
-    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE,to_field='id', db_column='film_work_id')
-    genre = models.ForeignKey('Genre', on_delete=models.CASCADE, to_field='id',db_column='genre_id')
+    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE, to_field='id', db_column='film_work_id')
+    genre = models.ForeignKey('Genre', on_delete=models.CASCADE, to_field='id', db_column='genre_id')
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
