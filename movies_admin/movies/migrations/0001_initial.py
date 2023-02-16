@@ -23,6 +23,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=255, verbose_name='title')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('creation_date', models.DateTimeField(auto_now=True)),
+                ('file_path', models.FileField(blank=True, upload_to='film_works/')),
                 ('rating', models.FloatField(blank=True, validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(100)], verbose_name='rating')),
                 ('type', models.CharField(choices=[('MV', 'movie'), ('TV', 'tv_show')], max_length=2)),
             ],
