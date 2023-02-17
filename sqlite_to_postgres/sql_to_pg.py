@@ -53,7 +53,7 @@ class SavePostgres(LoadDataSQLite):
 
         for block in data:
             block_values = '\n'.join([obj.get_values() for obj in block])
-            print(block_values)
+            logging.info(block_values)
             with io.StringIO(block_values) as f:
                 self.cursor.copy_from(f, table=self.table_name, null='None', size=PACK_SIZE)
             counter += 1
@@ -90,3 +90,6 @@ if __name__ == '__main__':
 
     with sqlite3.connect('db.sqlite') as sqlite_conn, psycopg2.connect(**dsn) as pg_conn:
         transfer_from_sql_to_pg(sqlite_conn, pg_conn)
+
+    sqlite_conn.close()
+    pg_conn.close()

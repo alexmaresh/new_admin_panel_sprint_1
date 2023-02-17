@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 from split_settings.tools import include
+import os
 
 
 load_dotenv()
@@ -31,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = list(os.environ.get('ALLOWED_HOSTS'))
 
 ROOT_URLCONF = 'movies_admin.config.urls'
 

@@ -43,3 +43,4 @@ CREATE TABLE IF NOT EXISTS content.genre_film_work (
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS film_work_person_idx ON content.person_film_work (film_work_id, person_id, role);
+CREATE UNIQUE INDEX IF NOT EXISTS film_work_genre_idx ON content.genre_film_work (film_work_id, genre_id);
