@@ -42,9 +42,6 @@ class LoadDataSQLite:
             counter += 1
         logging.info(f'Из таблицы {self.table_name} загружено {counter} пачек по {PACK_SIZE} записей')
 
-    def __del__(self):
-        self.cursor.close()
-
 
 class SavePostgres(LoadDataSQLite):
 
