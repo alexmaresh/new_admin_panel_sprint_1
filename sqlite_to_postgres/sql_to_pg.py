@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from psycopg2.extensions import connection as psgr_connection
 import logging
 import data
+from contextlib import contextmanager,closing
 
 load_dotenv()
 
@@ -19,6 +20,13 @@ TABLES_TO_CLASSES = {
     'person_film_work': data.PersonFilmWork,
 }
 
+@contextmanager
+def sqlite_connection(db_file):
+    conn = sqlite3.connect(db_file)
+    try:
+        yield conn
+    finally:
+        conn.close()
 
 class LoadDataSQLite:
     def __init__(self, connection, table_name, data_class):
@@ -50,7 +58,6 @@ class SavePostgres(LoadDataSQLite):
 
         for block in data:
             block_values = '\n'.join([obj.get_values() for obj in block])
-            logging.info(block_values)
             with io.StringIO(block_values) as f:
                 self.cursor.copy_from(f, table=self.table_name, null='None', size=PACK_SIZE)
             counter += 1
@@ -58,7 +65,6 @@ class SavePostgres(LoadDataSQLite):
 
 
 def transfer_from_sql_to_pg(sql_conn: sqlite3.Connection, psg_conn: psgr_connection):
-
     for table_name, data_class in TABLES_TO_CLASSES.items():
         try:
             sqlite_loader = LoadDataSQLite(sql_conn, table_name, data_class)
@@ -75,7 +81,6 @@ def transfer_from_sql_to_pg(sql_conn: sqlite3.Connection, psg_conn: psgr_connect
 
 
 if __name__ == '__main__':
-
     dsn = {
         'dbname': os.environ.get('DB_NAME'),
         'user': os.environ.get('DB_USER'),
@@ -85,8 +90,6 @@ if __name__ == '__main__':
         'options': '-c search_path=public,content',
     }
 
-    with sqlite3.connect('db.sqlite') as sqlite_conn, psycopg2.connect(**dsn) as pg_conn:
+with sqlite_connection('db.sqlite') as sqlite_conn, closing(psycopg2.connect(**dsn)) as pg_conn:
         transfer_from_sql_to_pg(sqlite_conn, pg_conn)
 
-    sqlite_conn.close()
-    pg_conn.close()

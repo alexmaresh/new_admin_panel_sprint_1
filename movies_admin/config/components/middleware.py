@@ -1,4 +1,4 @@
-from ..settings import DEBUG
+import os
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -10,5 +10,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if DEBUG:
+DEBUG = os.environ.get('DEBUG')
+if DEBUG == True:
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")

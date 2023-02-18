@@ -1,4 +1,4 @@
-from ..settings import DEBUG
+import os
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -8,7 +8,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'movies_admin.movies.apps.MoviesConfig',
+    'django_extensions'
 ]
 
-if DEBUG:
-    INSTALLED_APPS.append('debug_toolbar')
+DEBUG = os.environ.get('DEBUG')
+if DEBUG == True:
+     INSTALLED_APPS.append('debug_toolbar')
